@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
 import GraphQLError from '../Error/GraphQLError'
 import { SIGNIN_USER } from './../../queries'
+import { useNavigate } from 'react-router-dom'
 
 function Signin() {
   const schema = {
@@ -10,6 +11,7 @@ function Signin() {
   }
 
   const [formData, setFormData] = useState({ ...schema })
+  const navigate = useNavigate()
 
 
   // input change event handler
@@ -41,6 +43,9 @@ function Signin() {
 
       //clear form fields
       setFormData({ ...schema })
+
+      // redirect to home page
+      navigate('/')
     }).catch(error => {
       //clear form fields
       setFormData({ ...schema })

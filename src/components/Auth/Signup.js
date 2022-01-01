@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
 import { SIGNUP_USER } from './../../queries'
 import GraphQLError from '../Error/GraphQLError'
+import { useNavigate } from 'react-router-dom'
 
 function Signup() {
 
@@ -13,6 +14,7 @@ function Signup() {
   }
 
   const [formData, setFormData] = useState({ ...schema })
+  const navigate = useNavigate()
 
 
   // input change event handler
@@ -44,6 +46,9 @@ function Signup() {
 
       //clear form fields
       setFormData({ ...schema })
+
+      // redirect to home page
+      navigate('/')
     }).catch(error => {
       //clear form fields
       setFormData({ ...schema })
