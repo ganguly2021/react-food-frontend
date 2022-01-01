@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
 import { SIGNUP_USER } from './../../queries'
+import GraphQLError from '../Error/GraphQLError'
 
 function Signup() {
 
@@ -45,6 +46,19 @@ function Signup() {
       setFormData({ ...schema })
     })
 
+  }
+
+  // validate form data
+  const validateForm = () => {
+    const isInvalid = (
+      !formData.username ||
+      !formData.email ||
+      !formData.password2 ||
+      !formData.password ||
+      formData.password !== formData.password2
+    )
+
+    return isInvalid
   }
 
   return (
@@ -94,9 +108,10 @@ function Signup() {
                 <button
                   type="submit"
                   className='button-primary'
+                  disabled={loading || validateForm() ? true : false}
                 >Signup</button>
 
-                {error && <p>{error.message}</p>}
+                {error && <GraphQLError error={error} />}
               </form>
             )
           }
