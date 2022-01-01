@@ -36,8 +36,6 @@ function Signin() {
 
     // call the graphql mutation function
     signinUser().then(({ data }) => {
-      console.log(data.signinUser.token)
-
       // set token into localStorage
       localStorage.setItem("token", data.signinUser.token)
 
