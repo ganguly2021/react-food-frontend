@@ -4,7 +4,7 @@ import { SIGNUP_USER } from './../../queries'
 import GraphQLError from '../Error/GraphQLError'
 import { useNavigate } from 'react-router-dom'
 
-function Signup() {
+function Signup({ refetch }) {
 
   const schema = {
     username: '',
@@ -38,9 +38,12 @@ function Signup() {
     //console.log(formData)
 
     // call the graphql mutation function
-    signupUser().then(({ data }) => {
+    signupUser().then(async ({ data }) => {
       // set token into localStorage
       localStorage.setItem("token", data.signupUser.token)
+
+      // refetch current user
+      await refetch()
 
       //clear form fields
       setFormData({ ...schema })

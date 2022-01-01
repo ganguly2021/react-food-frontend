@@ -6,10 +6,10 @@ const withSession = (Component) => props => {
   return (
     <Query query={GET_CURRENT_USER} >
       {
-        ({ data, loading }) => {
+        ({ data, loading, refetch }) => {
           if ( loading ) return null
 
-          return <Component {...props} />
+          return <Component {...props} refetch={refetch} />
         }
       }
     </Query>

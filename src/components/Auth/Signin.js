@@ -4,7 +4,7 @@ import GraphQLError from '../Error/GraphQLError'
 import { SIGNIN_USER } from './../../queries'
 import { useNavigate } from 'react-router-dom'
 
-function Signin() {
+function Signin({ refetch }) {
   const schema = {
     username: '',
     password: ''
@@ -35,9 +35,12 @@ function Signin() {
     //console.log(formData)
 
     // call the graphql mutation function
-    signinUser().then(({ data }) => {
+    signinUser().then(async ({ data }) => {
       // set token into localStorage
       localStorage.setItem("token", data.signinUser.token)
+
+      // refetch current user
+      await refetch()
 
       //clear form fields
       setFormData({ ...schema })

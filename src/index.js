@@ -38,13 +38,13 @@ const graphqlClient = new ApolloClient({
   }
 });
 
-const Root = () => {
+const Root = ({ refetch }) => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin refetch={refetch} />} />
+        <Route path="/signup" element={<Signup refetch={refetch} />} />
       </Routes>
     </Router>
   )
