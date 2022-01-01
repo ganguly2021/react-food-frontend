@@ -14,7 +14,27 @@ import Signin from './components/Auth/Signin';
 import Signup from './components/Auth/Signup';
 
 const graphqlClient = new ApolloClient({
-  uri: "http://localhost:4000/graphql"
+  uri: "http://localhost:4000/graphql",
+  fetchOptions: {
+    credentials: 'include'
+  },
+  request: operation => {
+    const token = localStorage.getItem('token')
+
+    operation.setContext({
+      headers: {
+        authorization: token
+      }
+    })
+  },
+  onError: ({ networkError }) => {
+    console.log('Network Error: ' + networkError)
+
+    // if (networkError.statusCode === 401) {
+    //   // clear token from localStorage
+    //   localStorage.removeItem('token')
+    // }
+  }
 });
 
 const Root = () => {

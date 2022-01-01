@@ -36,8 +36,11 @@ function Signup() {
     //console.log(formData)
 
     // call the graphql mutation function
-    signupUser().then(data => {
-      console.log(data);
+    signupUser().then(({ data }) => {
+      console.log(data.signupUser.token)
+
+      // set token into localStorage
+      localStorage.setItem("token", data.signupUser.token)
 
       //clear form fields
       setFormData({ ...schema })
