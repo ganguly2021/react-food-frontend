@@ -13,8 +13,10 @@ import {
 import Signin from './components/Auth/Signin';
 import Signup from './components/Auth/Signup';
 import withSession from './hoc/withSession';
-import Navbar from './components/Navbar/Navbar'
-import Search from './components/Recipe/Search'
+import Navbar from './components/Navbar/Navbar';
+import Search from './components/Recipe/Search';
+import AddRecipe from './components/Recipe/AddRecipe';
+import Profile from './components/Profile/Profile';
 
 const graphqlClient = new ApolloClient({
   uri: "http://localhost:4000/graphql",
@@ -49,6 +51,8 @@ const Root = ({ refetch }) => {
         <Route path="/signin" element={<Signin refetch={refetch} />} />
         <Route path="/signup" element={<Signup refetch={refetch} />} />
         <Route path="/search" element={<Search refetch={refetch} />} />
+        <Route path="/recipe/add" element={<AddRecipe />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   )
