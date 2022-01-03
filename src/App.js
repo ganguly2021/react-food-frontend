@@ -3,6 +3,8 @@ import { Query } from 'react-apollo'
 import { GET_ALL_RECIPES } from './queries'
 import './App.css'
 
+import RecipeItem from './components/Recipe/RecipeItem'
+
 const App = () => {
   return (
     <div className='App'>
@@ -10,16 +12,16 @@ const App = () => {
       <Query query={GET_ALL_RECIPES}>
         {
           ({ data, loading, error }) => {
-            if (loading){
+            if (loading) {
               return <h3>Loading...</h3>
             }
 
-            if (error){
+            if (error) {
               return <h3>Some error occur.</h3>
             }
 
             return (
-              <p>Query It.</p>
+              <ul>{data.getAllRecipes.map(recipe => <RecipeItem key={recipe._id} {...recipe} />)}</ul>
             )
           }
         }

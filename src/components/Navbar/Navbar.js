@@ -25,7 +25,7 @@ const NavbarAuth = ({ session }) => {
         <li><NavLink to='/profile'>Profile</NavLink></li>
         <li><Signout /></li>
       </ul>
-      <h4>Welcome, <strong>{session.getCurrentUser.username}</strong></h4>
+      <h4>Welcome, {session.getCurrentUser.username}</h4>
     </React.Fragment>
   )
 }
