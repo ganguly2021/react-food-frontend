@@ -19,6 +19,8 @@ export const GET_RECIPE = gql`
       category
       instructions
       description
+      likes
+      username
     }
   }
 `

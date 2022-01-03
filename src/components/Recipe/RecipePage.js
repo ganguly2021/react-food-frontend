@@ -11,22 +11,20 @@ function RecipePage() {
     <Query query={GET_RECIPE} variables={{ id: params._id }}>
       {
         ({ data, loading, error }) => {
-
-          if (loading) {
-            return (
-              <p>Loading...</p>
-            )
-          } else {
-            if (!error) {
-              return (
-                <p>Name: {data.getRecipe.name}</p>
-              )
-            } else {
-              return (
-                <p>Some error occured.</p>
-              )
-            }
-          }
+          if ( loading ) return <h4>Loading...</h4>
+          if ( error ) return <h4>Error</h4>
+          
+          return (
+            <div className='App'>
+              <h4>Name: {data.getRecipe.name}</h4>
+              <p>Category: {data.getRecipe.category}</p>
+              <p>Description: {data.getRecipe.description}</p>
+              <p>Instructions: {data.getRecipe.instructions}</p>
+              <p>Likes: {Number(data.getRecipe.likes)}</p>
+              <p>Created By: {data.getRecipe.username}</p>
+              <button>Like</button>
+            </div>
+          )
         }
       }
     </Query>
