@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
+import { Mutation } from 'react-apollo'
+import { ADD_RECIPE } from './../../queries'
+import { useNavigate } from 'react-router-dom'
 
 function AddRecipe({ session }) {
+
+  const navigate = useNavigate()
 
   const schema = {
     name: '',
@@ -30,12 +35,20 @@ function AddRecipe({ session }) {
   }
 
   // handle form submit
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, addRecipe) => {
     e.preventDefault()
 
+    // call the graphql mutation function
+    addRecipe().then(({ data }) => {
+      //clear form fields
+      setFormData({ ...schema })
 
-
-    console.log(formData)
+      // redirect to home page
+      navigate('/')
+    }).catch(error => {
+      //clear form fields
+      setFormData({ ...schema })
+    })
   }
 
   // handle form validation
@@ -54,41 +67,49 @@ function AddRecipe({ session }) {
   return (
     <div className='App'>
       <h1 className='App'>Add Recipe</h1>
-      <form className='form' onSubmit={(e) => handleSubmit(e)}>
-        <input
-          type="text"
-          name="name"
-          placeholder='Recipe Name'
-          className=''
-          value={formData.name}
-          onChange={handleInputChange}
-        />
-        <select name="category" onChange={handleInputChange}>
-          <option value="Breakfast">Breakfast</option>
-          <option value="Lunch">Lunch</option>
-          <option value="Dinner">Dinner</option>
-          <option value="Snack">Snack</option>
-        </select>
-        <input
-          type="text"
-          name="description"
-          placeholder='Description'
-          className=''
-          value={formData.description}
-          onChange={handleInputChange}
-        />
-        <textarea
-          name="instructions"
-          placeholder='Add Instructions'
-          value={formData.instructions}
-          onChange={handleInputChange}
-        ></textarea>
-        <button
-          type="submit"
-          className='button-primary'
-          disabled={loading || validateForm() ? true : false}
-        >Add</button>
-      </form>
+      <Mutation mutation={ADD_RECIPE} variables={{ ...formData }}>
+        {
+          (addRecipe, { data, loading, error }) => {
+            return (
+              <form className='form' onSubmit={(e) => handleSubmit(e, addRecipe)}>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder='Recipe Name'
+                  className=''
+                  value={formData.name}
+                  onChange={handleInputChange}
+                />
+                <select name="category" onChange={handleInputChange}>
+                  <option value="Breakfast">Breakfast</option>
+                  <option value="Lunch">Lunch</option>
+                  <option value="Dinner">Dinner</option>
+                  <option value="Snack">Snack</option>
+                </select>
+                <input
+                  type="text"
+                  name="description"
+                  placeholder='Description'
+                  className=''
+                  value={formData.description}
+                  onChange={handleInputChange}
+                />
+                <textarea
+                  name="instructions"
+                  placeholder='Add Instructions'
+                  value={formData.instructions}
+                  onChange={handleInputChange}
+                ></textarea>
+                <button
+                  type="submit"
+                  className='button-primary'
+                  disabled={loading || validateForm() ? true : false}
+                >Add</button>
+              </form>
+            )
+          }
+        }
+      </Mutation>
     </div>
   )
 }

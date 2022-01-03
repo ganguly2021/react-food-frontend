@@ -29,6 +29,28 @@ export const GET_RECIPE = gql`
 
 /* Recipe Mutation Starts */
 
+export const ADD_RECIPE = gql`
+  mutation(
+    $name: String!, 
+    $description: String!, 
+    $category: String!, 
+    $instructions: String!,
+    $username: String!
+  ) {
+    addRecipe(
+      name: $name,
+      description: $description,
+      category: $category,
+      instructions: $instructions
+      username: $username
+    ) {
+      name
+      description
+      instructions
+    }
+  }
+`
+
 
 /* Recipe Mutation Ends */
 
