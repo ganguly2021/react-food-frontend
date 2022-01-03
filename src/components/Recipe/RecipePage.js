@@ -4,8 +4,8 @@ import { Query } from 'react-apollo'
 import { GET_RECIPE } from './../../queries'
 
 function RecipePage() {
+  // get URL params
   const params = useParams()
-  console.log(params)
 
   return (
     <Query query={GET_RECIPE} variables={{ id: params._id }}>
