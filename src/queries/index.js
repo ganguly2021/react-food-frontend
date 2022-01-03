@@ -11,6 +11,18 @@ export const GET_ALL_RECIPES = gql`
   }
 `
 
+export const GET_RECIPE = gql`
+  query($id: ID!){
+    getRecipe(_id: $id) {
+      _id
+      name
+      category
+      instructions
+      description
+    }
+  }
+`
+
 /* Recipe Queries Ends */
 
 /* Recipe Mutation Starts */

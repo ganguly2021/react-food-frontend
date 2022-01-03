@@ -1,9 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-function RecipeItem({ name, category }) {
+function RecipeItem({ _id, name, category }) {
+
   return (
     <li>
-      <h4>{name}</h4>
+      <Link to={`/recipe/${_id}`}><h4>{name}</h4></Link>
       <p><b>{category}</b></p>
     </li>
   )
