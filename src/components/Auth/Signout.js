@@ -9,9 +9,13 @@ function Signout() {
 
     // clear jwt token
     localStorage.setItem('token', '')
-    client.resetStore()
-    // redirect to home page
-    navigate('/')
+
+    client.clearStore().then(() => {
+      client.resetStore()
+      // redirect to home page
+      navigate('/')
+    })
+
   }
 
 
