@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { ApolloConsumer } from 'react-apollo'
 import { SEARCH_RECIPES } from './../../queries'
-import RecipeItem from './RecipeItem'
+import SearchItem from './SearchItem'
 
 function Search() {
 
@@ -21,7 +21,7 @@ function Search() {
           return (
             <div className='App'>
               <input type="text"
-                placeholder='Search'
+                placeholder='Search recipe here.'
                 onChange={async (e) => {
                   e.persist()
 
@@ -35,7 +35,11 @@ function Search() {
               />
               <ul>
                 {
-                  data.length !== 0 && data.map(recipe => <RecipeItem {...recipe} key={recipe._id} />)
+                  data.length !== 0 && data.map(recipe => {
+                    return (
+                      <SearchItem {...recipe} key={recipe._id} />
+                    )
+                  })
                 }
               </ul>
             </div>

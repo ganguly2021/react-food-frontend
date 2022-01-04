@@ -36,6 +36,7 @@ export const SEARCH_RECIPES = gql`
       instructions
       category
       _id
+      likes
     }
   }
 `
