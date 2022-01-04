@@ -7,10 +7,6 @@ import RecipeItem from './components/Recipe/RecipeItem'
 
 const App = () => {
 
-  useEffect(() => {
-    console.log("I am loaded again.")
-  }, [])
-
   return (
     <div className='App'>
       <h1>Home</h1>

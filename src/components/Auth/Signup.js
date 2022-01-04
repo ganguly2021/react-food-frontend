@@ -81,7 +81,7 @@ function Signup({ refetch }) {
         {
           (signupUser, { data, loading, error }) => {
             return (
-              <form className='form' onSubmit={(e) => handleSubmit(e, signupUser)}>
+              <form onSubmit={(e) => handleSubmit(e, signupUser)}>
                 <input
                   type="text"
                   name="username"

@@ -25,6 +25,21 @@ export const GET_RECIPE = gql`
   }
 `
 
+export const SEARCH_RECIPES = gql`
+  query($searchText: String!){
+    searchRecipes(
+      searchText: $searchText
+    ){
+      name
+      description
+      username
+      instructions
+      category
+      _id
+    }
+  }
+`
+
 /* Recipe Queries Ends */
 
 /* Recipe Mutation Starts */
