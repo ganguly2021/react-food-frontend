@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Query } from 'react-apollo'
 import { GET_ALL_RECIPES } from './queries'
 import './App.css'
@@ -6,6 +6,11 @@ import './App.css'
 import RecipeItem from './components/Recipe/RecipeItem'
 
 const App = () => {
+
+  useEffect(() => {
+    console.log("I am loaded again.")
+  }, [])
+
   return (
     <div className='App'>
       <h1>Home</h1>

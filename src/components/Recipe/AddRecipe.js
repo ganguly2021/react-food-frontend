@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
-import { ADD_RECIPE } from './../../queries'
+import { ADD_RECIPE, GET_ALL_RECIPES } from './../../queries'
 import { useNavigate } from 'react-router-dom'
+import GraphQLError from './../Error/GraphQLError'
 
 function AddRecipe({ session }) {
 
@@ -64,10 +65,23 @@ function AddRecipe({ session }) {
     return isInvalid
   }
 
+  // update GraphQL cache after 
+  // new recipe added
+  const updateCache = (cache, { data: { addRecipe } }) => {
+    const { getAllRecipes } = cache.readQuery({ query: GET_ALL_RECIPES })
+
+    cache.writeQuery({
+      query: GET_ALL_RECIPES,
+      data: {
+        getAllRecipes: getAllRecipes.concat([addRecipe])
+      }
+    })
+  }
+
   return (
     <div className='App'>
       <h1 className='App'>Add Recipe</h1>
-      <Mutation mutation={ADD_RECIPE} variables={{ ...formData }}>
+      <Mutation mutation={ADD_RECIPE} variables={{ ...formData }} update={updateCache}>
         {
           (addRecipe, { data, loading, error }) => {
             return (
@@ -105,6 +119,7 @@ function AddRecipe({ session }) {
                   className='button-primary'
                   disabled={loading || validateForm() ? true : false}
                 >Add</button>
+                {error && <GraphQLError error={error} />}
               </form>
             )
           }
