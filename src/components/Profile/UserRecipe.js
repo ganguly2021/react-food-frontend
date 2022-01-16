@@ -1,13 +1,32 @@
 import React from 'react'
-import { Query } from 'react-apollo'
-import { GET_USER_RECIPES } from './../../queries'
+import { Mutation, Query } from 'react-apollo'
+import { GET_USER_RECIPES, DELETE_USER_RECIPE } from './../../queries'
 import { Link } from 'react-router-dom'
 
 function UserRecipe({ username }) {
+
+  // delete user recipe based on ID
+  const handleDelete = async (deleteUserRecipe, refetch) => {
+
+    const confirmDelete = window.confirm("Are you sure ? you want to delete recipe.")
+
+    if (confirmDelete) {
+      deleteUserRecipe()
+        .then(recipe => {
+          console.log(recipe)
+
+          // refecth get user recipes
+          refetch()
+        }).catch(error => {
+
+        })
+    }
+
+  }
   return (
     <Query query={GET_USER_RECIPES} variables={{ username: username }}>
       {
-        ({ data, loading, error }) => {
+        ({ data, loading, error, refetch }) => {
           if (error) return <p>{error}</p>
           if (loading) return <p>Loading...</p>
 
@@ -18,6 +37,19 @@ function UserRecipe({ username }) {
                   <Link to={`/recipe/${recipe._id}`}>
                     <p>{recipe.name}</p>
                   </Link>
+                  <p style={{ marginBottom: '0' }}>Likes: {recipe.likes}</p>
+                  <Mutation mutation={DELETE_USER_RECIPE} variables={{
+                    id: recipe._id
+                  }}>
+                    {
+                      (deleteUserRecipe, { data, loading, error }) => {
+                        if (error) return <p>{error}</p>
+                        if (loading) return (<p>Loading...</p>)
+
+                        return (<button className='delete-button' onClick={() => handleDelete(deleteUserRecipe, refetch)}>X</button>)
+                      }
+                    }
+                  </Mutation>
                 </li>
               )
             })

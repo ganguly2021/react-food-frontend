@@ -50,6 +50,7 @@ export const GET_USER_RECIPES = gql`
       instructions
       category
       _id
+      likes
     }
   }
 `
@@ -75,6 +76,16 @@ export const ADD_RECIPE = gql`
     ) {
       name
       description
+      instructions
+    }
+  }
+`
+
+export const DELETE_USER_RECIPE = gql`
+  mutation($id: ID!){
+    deleteUserRecipe(id: $id){
+      name
+      likes
       instructions
     }
   }
