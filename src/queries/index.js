@@ -90,7 +90,17 @@ export const DELETE_USER_RECIPE = gql`
     }
   }
 `
-
+export const LIKE_RECIPE = gql`
+  mutation($recipeID: ID!, $username: String!){
+    likeRecipe(
+      recipeID: $recipeID,
+      username: $username
+    ){
+      name
+      likes
+    }
+  }
+`
 
 /* Recipe Mutation Ends */
 

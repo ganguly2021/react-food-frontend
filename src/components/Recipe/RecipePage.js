@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { Query } from 'react-apollo'
 import { GET_RECIPE } from './../../queries'
+import LikeRecipe from './LikeRecipe'
 
 function RecipePage() {
   // get URL params
@@ -22,7 +23,7 @@ function RecipePage() {
               <p>Instructions: {data.getRecipe.instructions}</p>
               <p>Likes: {Number(data.getRecipe.likes)}</p>
               <p>Created By: {data.getRecipe.username}</p>
-              <button>Like</button>
+              <LikeRecipe recipeID={data.getRecipe._id} />
             </div>
           )
         }
