@@ -1,6 +1,6 @@
 import React from 'react'
 import { Mutation, Query } from 'react-apollo'
-import { GET_USER_RECIPES, DELETE_USER_RECIPE } from './../../queries'
+import { GET_USER_RECIPES, DELETE_USER_RECIPE, GET_ALL_RECIPES, GET_CURRENT_USER } from './../../queries'
 import { Link } from 'react-router-dom'
 
 function UserRecipe({ username }) {
@@ -40,11 +40,18 @@ function UserRecipe({ username }) {
                   <p style={{ marginBottom: '0' }}>Likes: {recipe.likes}</p>
                   <Mutation mutation={DELETE_USER_RECIPE} variables={{
                     id: recipe._id
-                  }}>
+                  }}
+                    refetchQueries={
+                      () => [
+                        { query: GET_ALL_RECIPES },
+                        { query: GET_CURRENT_USER }
+                      ]
+                    }
+                  >
                     {
                       (deleteUserRecipe, { data, loading, error }) => {
                         if (error) return <p>{error}</p>
-                        if (loading) return (<p>Loading...</p>)
+                        if (loading) return (<p>Deleting...</p>)
 
                         return (<button className='delete-button' onClick={() => handleDelete(deleteUserRecipe, refetch)}>X</button>)
                       }
