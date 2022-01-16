@@ -61,7 +61,7 @@ function UserRecipe({ username }) {
               )
             })
           } else {
-            return (!data.getUserRecipes.length && <p>You dont have any favourites. Go add some !</p>)
+            return (!data.getUserRecipes.length && <p>You dont add any recipes yet!</p>)
           }
 
         }

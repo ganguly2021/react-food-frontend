@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
-import { ADD_RECIPE, GET_ALL_RECIPES } from './../../queries'
+import { ADD_RECIPE, GET_ALL_RECIPES, GET_USER_RECIPES } from './../../queries'
 import { useNavigate } from 'react-router-dom'
 import GraphQLError from './../Error/GraphQLError'
 import withAuth from '../../hoc/withAuth'
@@ -82,7 +82,16 @@ function AddRecipe({ session }) {
   return (
     <div className='App'>
       <h1 className='App'>Add Recipe</h1>
-      <Mutation mutation={ADD_RECIPE} variables={{ ...formData }} update={updateCache}>
+      <Mutation 
+        mutation={ADD_RECIPE} 
+        variables={{ ...formData }} 
+        update={updateCache}
+        refetchQueries={
+          () => [
+            { query: GET_USER_RECIPES, variables: { username: session.getCurrentUser.username } }
+          ]
+        }
+        >
         {
           (addRecipe, { data, loading, error }) => {
             return (
