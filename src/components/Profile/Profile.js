@@ -1,9 +1,10 @@
 import React from 'react'
-
-function Profile() {
+import UserInfo from './UserInfo'
+ 
+function Profile({ session }) {
   return (
-    <div>
-      Profile Page
+    <div className='App'>
+      <UserInfo session={session} />
     </div>
   )
 }
