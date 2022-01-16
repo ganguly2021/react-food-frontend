@@ -41,6 +41,19 @@ export const SEARCH_RECIPES = gql`
   }
 `
 
+export const GET_USER_RECIPES = gql`
+  query($username: String!){
+    getUserRecipes(username: $username){
+      name
+      description
+      username
+      instructions
+      category
+      _id
+    }
+  }
+`
+
 /* Recipe Queries Ends */
 
 /* Recipe Mutation Starts */

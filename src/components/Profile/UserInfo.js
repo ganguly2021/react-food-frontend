@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import UserRecipe from './UserRecipe'
 
 function UserInfo({ session }) {
 
@@ -16,7 +17,8 @@ function UserInfo({ session }) {
       <p>Join Date: {formatDate(Number(session.getCurrentUser.joinDate))}</p>
       <ul>
         <h3>{session.getCurrentUser.username}'s favourites.</h3>
-        {
+        <UserRecipe username={session.getCurrentUser.username} />
+        {/* {
           session.getCurrentUser.favourites.map(recipe => {
             return (
               <li key={recipe._id}>
@@ -29,7 +31,7 @@ function UserInfo({ session }) {
         }
         {
           (!session.getCurrentUser.favourites.length && <p>You dont have any favourites. Go add some !</p>)
-        }
+        } */}
       </ul>
     </div>
   )
