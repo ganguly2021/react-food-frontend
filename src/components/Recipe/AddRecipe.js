@@ -3,6 +3,7 @@ import { Mutation } from 'react-apollo'
 import { ADD_RECIPE, GET_ALL_RECIPES } from './../../queries'
 import { useNavigate } from 'react-router-dom'
 import GraphQLError from './../Error/GraphQLError'
+import withAuth from '../../hoc/withAuth'
 
 function AddRecipe({ session }) {
 
@@ -129,4 +130,4 @@ function AddRecipe({ session }) {
   )
 }
 
-export default AddRecipe
+export default withAuth(session => session && session.getCurrentUser)(AddRecipe)
