@@ -102,6 +102,18 @@ export const LIKE_RECIPE = gql`
   }
 `
 
+export const UNLIKE_RECIPE = gql`
+  mutation($recipeID: ID!, $username: String!){
+    unlikeRecipe(
+      recipeID: $recipeID,
+      username: $username
+    ){
+      name
+      likes
+    }
+  }
+`
+
 /* Recipe Mutation Ends */
 
 /* ---------------------- */

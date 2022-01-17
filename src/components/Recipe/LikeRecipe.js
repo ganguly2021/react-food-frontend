@@ -3,6 +3,7 @@ import { Mutation } from 'react-apollo'
 // import {  } from './../../queries'
 import withSession from './../../hoc/withSession'
 import { LIKE_RECIPE, GET_RECIPE } from './../../queries'
+import UnlikeRecipe from './UnlikeRecipe'
 
 function LikeRecipe({ session, recipeID, refetch }) {
   const [username, setUsername] = useState('')
@@ -32,22 +33,16 @@ function LikeRecipe({ session, recipeID, refetch }) {
   // handle like button click
   const handleLike = (likeRecipe) => {
 
-    likeRecipe().then(recipe => {
+    likeRecipe().then(async recipe => {
       // update liked state
       setIsLiked(true)
 
       // refetch GET_RECIPE
-      refetch();
+      await refetch();
     }).catch(error => {
       console.log(error)
     })
   }
-
-  // handle unlike recipe
-  const handleUnlike = () => {
-    console.log('Add unlike GraphQL mutation here.')
-  }
-
 
   return (
     <Mutation mutation={LIKE_RECIPE} variables={{
@@ -66,7 +61,11 @@ function LikeRecipe({ session, recipeID, refetch }) {
 
           // if user already liked the food
           if (isLiked) {
-            return username && (<button onClick={() => handleUnlike()}>Unlike</button>)
+            return (username && <UnlikeRecipe
+              username={username}
+              recipeID={recipeID}
+              refetchGetRecipe={refetch}
+            />)
           } else {
             return username && (<button onClick={() => handleLike(likeRecipe)}>Like</button>)
           }
