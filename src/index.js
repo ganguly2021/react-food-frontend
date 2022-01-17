@@ -53,8 +53,8 @@ const Root = ({ refetch, session }) => {
         <Route path="/signup" element={<Signup refetch={refetch} />} />
         <Route path="/search" element={<Search refetch={refetch} />} />
         <Route path="/recipe/add" element={<AddRecipe session={session} />} />
-        <Route path="/recipe/:_id" element={<RecipePage />} />
-        <Route path="/profile" element={<Profile session={session}/>} />
+        <Route path="/recipe/:_id" element={<RecipePage session={session} />} />
+        <Route path="/profile" element={<Profile session={session} />} />
       </Routes>
     </Router>
   )

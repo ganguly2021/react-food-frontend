@@ -3,15 +3,16 @@ import { useParams } from 'react-router-dom'
 import { Query } from 'react-apollo'
 import { GET_RECIPE } from './../../queries'
 import LikeRecipe from './LikeRecipe'
+import withAuth from './../../hoc/withAuth'
 
-function RecipePage() {
+function RecipePage({ session }) {
   // get URL params
   const params = useParams()
 
   return (
     <Query query={GET_RECIPE} variables={{ id: params._id }}>
       {
-        ({ data, loading, error }) => {
+        ({ data, loading, error, refetch }) => {
           if ( loading ) return <h4>Loading...</h4>
           if ( error ) return <h4>Error</h4>
           
@@ -23,7 +24,7 @@ function RecipePage() {
               <p>Instructions: {data.getRecipe.instructions}</p>
               <p>Likes: {Number(data.getRecipe.likes)}</p>
               <p>Created By: {data.getRecipe.username}</p>
-              <LikeRecipe recipeID={data.getRecipe._id} />
+              <LikeRecipe refetch={refetch} recipeID={data.getRecipe._id} />
             </div>
           )
         }
@@ -32,4 +33,4 @@ function RecipePage() {
   )
 }
 
-export default RecipePage
+export default withAuth(session => session && session.getCurrentUser)(RecipePage)

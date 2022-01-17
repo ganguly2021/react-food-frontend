@@ -4,27 +4,48 @@ import { Mutation } from 'react-apollo'
 import withSession from './../../hoc/withSession'
 import { LIKE_RECIPE, GET_RECIPE } from './../../queries'
 
-function LikeRecipe({ session, recipeID }) {
+function LikeRecipe({ session, recipeID, refetch }) {
   const [username, setUsername] = useState('')
-  
+  const [isLiked, setIsLiked] = useState(false)
+
   useEffect(() => {
     if (session) {
       setUsername(session.getCurrentUser.username)
     }
 
+    // check if user already liked the food
+    const isMatch = session.getCurrentUser.favourites.findIndex(recipe => {
+      return recipe._id === recipeID
+    })
+
+    if (isMatch !== -1) {
+      setIsLiked(true)
+    }
+
     //cleanup
     return () => {
       setUsername('')
+      setIsLiked(false)
     }
   })
 
   // handle like button click
   const handleLike = (likeRecipe) => {
-    likeRecipe().then(recipe => {
-      console.log(recipe);
-    }).catch(error => {
 
+    likeRecipe().then(recipe => {
+      // update liked state
+      setIsLiked(true)
+
+      // refetch GET_RECIPE
+      refetch();
+    }).catch(error => {
+      console.log(error)
     })
+  }
+
+  // handle unlike recipe
+  const handleUnlike = () => {
+    console.log('Add unlike GraphQL mutation here.')
   }
 
 
@@ -33,16 +54,22 @@ function LikeRecipe({ session, recipeID }) {
       recipeID: recipeID,
       username: username
     }}
-    refetchQueries={
-      () => [
-        { query: GET_RECIPE, variables: { id: recipeID } }
-      ]
-    }
+      refetchQueries={
+        () => [
+          { query: GET_RECIPE, variables: { id: recipeID } }
+        ]
+      }
     >
 
       {
         (likeRecipe, { data, error, loading }) => {
-          return username && (<button onClick={() => handleLike(likeRecipe)}>Like</button>)
+
+          // if user already liked the food
+          if (isLiked) {
+            return username && (<button onClick={() => handleUnlike()}>Unlike</button>)
+          } else {
+            return username && (<button onClick={() => handleLike(likeRecipe)}>Like</button>)
+          }
         }
       }
 

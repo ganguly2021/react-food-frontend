@@ -117,7 +117,6 @@ export const GET_CURRENT_USER = gql`
       joinDate
       favourites {
         _id
-        name
       }
     }
   }
