@@ -89,7 +89,7 @@ function Signup({ refetch }) {
                   className=''
                   value={formData.username}
                   onChange={handleInputChange}
-                />
+                /> <br />
                 <input
                   type="email"
                   name="email"
@@ -97,7 +97,7 @@ function Signup({ refetch }) {
                   className=''
                   value={formData.email}
                   onChange={handleInputChange}
-                />
+                /> <br />
                 <input
                   type="password"
                   name="password"
@@ -105,7 +105,7 @@ function Signup({ refetch }) {
                   className=''
                   value={formData.password}
                   onChange={handleInputChange}
-                />
+                /> <br />
                 <input
                   type="password"
                   name="password2"
@@ -113,12 +113,12 @@ function Signup({ refetch }) {
                   className=''
                   value={formData.password2}
                   onChange={handleInputChange}
-                />
+                /> <br />
                 <button
                   type="submit"
                   className='button-primary'
                   disabled={loading || validateForm() ? true : false}
-                >Signup</button>
+                >Signup</button> <br />
 
                 {error && <GraphQLError error={error} />}
               </form>
